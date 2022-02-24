@@ -1,8 +1,11 @@
+from fileinput import filename
+import os
+from pathlib import Path
 from pprint import pprint
 from random import choice
 from string import ascii_lowercase
 import datetime
-
+from unicodedata import name
 
 with open('wordlist.txt','r') as f:
     words=f.read().split()
@@ -12,6 +15,8 @@ with open('wordlist.txt','r') as f:
 # target = 'evoke'
 letters = ' '.join(ascii_lowercase)
 
+fileDir = os.path.dirname(os.path.realpath('__file__'))
+
 guess = input("Guess a five letter word: ")
 
 while True:
@@ -20,7 +25,8 @@ while True:
     if guess.lower() == "debug all":
         del words
         name = f"debug-{datetime.datetime.now().strftime('%Y%m%d-%H-%M-%S')}.txt"
-        with open(name,'w') as d:
+        fileName = os.path.join(fileDir, f'dubug/{name}')
+        with open(fileName,'w') as d:
             pprint(vars(),d)
         print(f"debug file created at {name}")
         with open('wordlist.txt','r') as f:
